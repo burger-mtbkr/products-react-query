@@ -1,15 +1,18 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import { BrowserRouter as Router } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import './App.css';
+import Routes from './routes/Routes';
 
+// Create a client
+const queryClient = new QueryClient();
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Products app example reactQuery</p>
-      </header>
-    </div>
+    <Router>
+      <QueryClientProvider client={queryClient}>
+        <header className="App-header" />
+        <Routes />
+      </QueryClientProvider>
+    </Router>
   );
 }
 
