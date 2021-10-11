@@ -9,10 +9,8 @@ function App() {
   return (
     <Router>
       <QueryClientProvider client={queryClient}>
-        <div className="App">
-          <header className="App-header" />
-          <Routes />
-        </div>
+        <header className="App-header" />
+        <Routes />
       </QueryClientProvider>
     </Router>
   );

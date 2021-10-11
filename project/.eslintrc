@@ -4,6 +4,18 @@
     {
       "files": ["*.jsx", "*.tsx", "*.js", "*.ts"],
       "rules": {
+        "no-console": 2,
+        "no-trailing-spaces": "error",
+        "prettier/prettier": [
+          "error",
+          {
+            "singleQuote": true,
+            "trailingComma": "all",
+            "useTabs": false,
+            "tabWidth": 2,
+            "endOfLine": "lf"
+          }
+        ],
         "@typescript-eslint/explicit-module-boundary-types": ["off"],
         "@typescript-eslint/no-unsafe-assignment": ["off"]
       }
