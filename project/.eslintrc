@@ -1,0 +1,12 @@
+{
+  "extends": ["wesbos/typescript", "prettier"],
+  "overrides": [
+    {
+      "files": ["*.jsx", "*.tsx", "*.js", "*.ts"],
+      "rules": {
+        "@typescript-eslint/explicit-module-boundary-types": ["off"],
+        "@typescript-eslint/no-unsafe-assignment": ["off"]
+      }
+    }
+  ]
+}
