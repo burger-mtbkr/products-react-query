@@ -4,10 +4,11 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import { TestIds } from 'src/utils/testIds';
 
 const Header = () => (
   <Box sx={{ flexGrow: 1 }} marginBottom={5}>
-    <AppBar position="static">
+    <AppBar position="static" data-testid={TestIds.headerAppBarTestId}>
       <Toolbar>
         <IconButton
           size="large"
