@@ -1692,9 +1692,9 @@
   resolved "https://registry.npmjs.org/@mui/types/-/types-7.0.0.tgz"
   integrity sha512-M/tkF2pZ4uoPhZ8pnNhlVnOFtz6F3dnYKIsnj8MuXKT6d26IE2u0UjA8B0275ggN74dR9rlHG5xJt5jgDx/Ung==
 
-"@mui/utils@^5.0.1":
+"@mui/utils@^4.11.2", "@mui/utils@^5.0.1":
   version "5.0.1"
-  resolved "https://registry.npmjs.org/@mui/utils/-/utils-5.0.1.tgz"
+  resolved "https://registry.yarnpkg.com/@mui/utils/-/utils-5.0.1.tgz#d4f0f41b82db6ac273920a1b5b6a4de7879271f5"
   integrity sha512-GWO104N+o9KG5fKiTEYnAg7kONKEg3vLN+VROAU0f3it6lFGLCVPcQYex/1gJ4QAy96u6Ez8/Hmmhi1+3cX0tQ==
   dependencies:
     "@babel/runtime" "^7.15.4"

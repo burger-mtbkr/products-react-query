@@ -1,18 +1,26 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import './App.css';
+import { createTheme, ThemeProvider } from '@mui/material';
 import Routes from './routes/Routes';
+import Header from './components/Header/Header';
 
-// Create a client
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
+
 const queryClient = new QueryClient();
 function App() {
   return (
-    <Router>
-      <QueryClientProvider client={queryClient}>
-        <header className="App-header" />
-        <Routes />
-      </QueryClientProvider>
-    </Router>
+    <ThemeProvider theme={darkTheme}>
+      <Router>
+        <QueryClientProvider client={queryClient}>
+          <Header />
+          <Routes />
+        </QueryClientProvider>
+      </Router>
+    </ThemeProvider>
   );
 }
 
