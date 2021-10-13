@@ -13,14 +13,14 @@ const darkTheme = createTheme({
 const queryClient = new QueryClient();
 function App() {
   return (
-    <ThemeProvider theme={darkTheme}>
-      <Router>
-        <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={darkTheme}>
+        <Router>
           <Header />
           <Routes />
-        </QueryClientProvider>
-      </Router>
-    </ThemeProvider>
+        </Router>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
 

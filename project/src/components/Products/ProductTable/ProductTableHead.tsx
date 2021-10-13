@@ -29,7 +29,7 @@ interface HeadCell {
 const headCells: readonly HeadCell[] = [
   {
     id: 'id',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Id',
   },

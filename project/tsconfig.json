@@ -21,7 +21,7 @@
     "noImplicitAny": true,
     "downlevelIteration": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
   },
   "include": ["src"],
   "exclude": ["**/coverage/*", "**/dist/*", "**/node_modules/*"]

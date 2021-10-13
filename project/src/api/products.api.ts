@@ -6,6 +6,12 @@ const apiBaseEndpoint = `http://localhost:5000/api`;
 // See https://blog.bitsrc.io/how-to-start-using-react-query-4869e3d5680d
 export const getAllProducts = async (): Promise<Product[]> => {
   const productEndPoint = `${apiBaseEndpoint}/product`;
-  const { data } = await axios.get(productEndPoint);
-  return data as Array<Product>;
+  const response = await axios.get(productEndPoint, {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return response.data as Product[];
 };
