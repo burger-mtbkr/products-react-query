@@ -1,10 +1,31 @@
 {
+  "root": true,
+  "env": {
+    "es6": true,
+    "browser": true
+  },
   "extends": ["wesbos/typescript", "prettier"],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["."],
+        "extensions": [".ts", ".tsx", "js", "jsx"]
+      }
+    }
+  },
+  "rules": {
+    "jsx-a11y/anchor-is-valid": "off",
+    "no-plusplus": "off",
+    "react/forbid-prop-types": "off",
+    "react/jsx-filename-extension": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "off"
+  },
   "overrides": [
     {
       "files": ["*.jsx", "*.tsx", "*.js", "*.ts"],
       "rules": {
-        "no-console": 2,
         "no-trailing-spaces": "error",
         "prettier/prettier": [
           "error",
@@ -17,7 +38,8 @@
           }
         ],
         "@typescript-eslint/explicit-module-boundary-types": ["off"],
-        "@typescript-eslint/no-unsafe-assignment": ["off"]
+        "@typescript-eslint/no-unsafe-assignment": ["off"],
+        "@typescript-eslint/no-unsafe-return": ["off"]
       }
     }
   ]
