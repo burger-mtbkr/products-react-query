@@ -40,7 +40,7 @@ function getComparator<Key extends keyof number | string>(
 }
 
 const ProductTable = () => {
-  const { data } = useQuery<Array<Product>>('products', getAllProducts);
+  const { data } = useQuery<Product[], Error>('products', getAllProducts);
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Product>('name');
   const [selected, setSelected] = useState<readonly string[]>([]);
