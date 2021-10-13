@@ -15,8 +15,6 @@
   },
   "rules": {
     "jsx-a11y/anchor-is-valid": "off",
-    "max-len": "off",
-    "no-console": "error",
     "no-plusplus": "off",
     "react/forbid-prop-types": "off",
     "react/jsx-filename-extension": "off",
@@ -28,7 +26,6 @@
     {
       "files": ["*.jsx", "*.tsx", "*.js", "*.ts"],
       "rules": {
-        "no-console": 2,
         "no-trailing-spaces": "error",
         "prettier/prettier": [
           "error",
@@ -41,7 +38,8 @@
           }
         ],
         "@typescript-eslint/explicit-module-boundary-types": ["off"],
-        "@typescript-eslint/no-unsafe-assignment": ["off"]
+        "@typescript-eslint/no-unsafe-assignment": ["off"],
+        "@typescript-eslint/no-unsafe-return": ["off"]
       }
     }
   ]

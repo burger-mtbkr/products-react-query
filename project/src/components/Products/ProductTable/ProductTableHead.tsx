@@ -28,34 +28,28 @@ interface HeadCell {
 
 const headCells: readonly HeadCell[] = [
   {
+    id: 'id',
+    numeric: true,
+    disablePadding: false,
+    label: 'Id',
+  },
+  {
     id: 'name',
     numeric: false,
     disablePadding: true,
-    label: 'Dessert (100g serving)',
+    label: 'Name',
   },
   {
-    id: 'calories',
-    numeric: true,
+    id: 'category',
+    numeric: false,
     disablePadding: false,
-    label: 'Calories',
+    label: 'Category',
   },
   {
-    id: 'fat',
+    id: 'price',
     numeric: true,
     disablePadding: false,
-    label: 'Fat (g)',
-  },
-  {
-    id: 'carbs',
-    numeric: true,
-    disablePadding: false,
-    label: 'Carbs (g)',
-  },
-  {
-    id: 'protein',
-    numeric: true,
-    disablePadding: false,
-    label: 'Protein (g)',
+    label: 'Price',
   },
 ];
 

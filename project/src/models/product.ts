@@ -1,7 +1,6 @@
 export type Product = {
-  calories: number;
-  carbs: number;
-  fat: number;
+  id: number;
   name: string;
-  protein: number;
+  category: string;
+  price: number;
 };
