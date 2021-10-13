@@ -11,9 +11,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { TestIds } from 'src/utils';
 import { Order, Product } from 'src/models';
-import { getAllProducts } from 'src/api/products.api';
 import { useQuery } from 'react-query';
 import { useState } from 'react';
+import { getAllProducts } from 'src/api';
 import ProductTableToolbar from './ProductTableToolbar';
 import ProductTableHead from './ProductTableHead';
 
@@ -40,7 +40,7 @@ function getComparator<Key extends keyof number | string>(
 }
 
 const ProductTable = () => {
-  const { data } = useQuery('products', getAllProducts);
+  const { data } = useQuery<Array<Product>>('products', getAllProducts);
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Product>('name');
   const [selected, setSelected] = useState<readonly string[]>([]);
@@ -118,7 +118,7 @@ const ProductTable = () => {
         <ProductTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
-            sx={{ minWidth: 750 }}
+            sx={{ minWidth: 600 }}
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
           >
@@ -166,9 +166,9 @@ const ProductTable = () => {
                       >
                         {item.name}
                       </TableCell>
-                      <TableCell align="right">{item.id}</TableCell>
-                      <TableCell align="right">{item.name}</TableCell>
-                      <TableCell align="right">{item.category}</TableCell>
+                      <TableCell align="left">{item.id}</TableCell>
+                      <TableCell align="left">{item.name}</TableCell>
+                      <TableCell align="left">{item.category}</TableCell>
                       <TableCell align="right">{item.price}</TableCell>
                     </TableRow>
                   );
@@ -186,7 +186,7 @@ const ProductTable = () => {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[5, 10, 25, 50]}
           component="div"
           count={data?.length || 0}
           rowsPerPage={rowsPerPage}
