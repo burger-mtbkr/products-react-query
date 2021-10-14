@@ -14,6 +14,12 @@
 - React Testing Library
 - [React Query](https://react-query.tanstack.com/)
 
+**To run the project:**
+
+- Start the [Mongo-Api-Docker](https://github.com/loanburger/Mongo-Api-Docker) mock api as descriped in [readme](https://github.com/loanburger/Mongo-Api-Docker/blob/master/README.MD) file of that repo.
+- run `yarn install`
+- run `yarn start:dev`
+
 
 **Useful Articles:**
 
