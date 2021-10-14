@@ -43,7 +43,7 @@ const ProductTable = () => {
   const { data } = useQuery<Product[], Error>('products', getAllProducts);
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Product>('name');
-  const [selected, setSelected] = useState<readonly string[]>([]);
+  const [selected, setSelected] = useState<Product[]>([]);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(25);
@@ -56,7 +56,7 @@ const ProductTable = () => {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newlySelected = data?.map((n: Product) => n.name);
+      const newlySelected = data?.map((n: Product) => n);
       if (newlySelected) {
         setSelected(newlySelected);
       }
@@ -65,12 +65,12 @@ const ProductTable = () => {
     setSelected([]);
   };
 
-  const handleClick = (name: string) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected: readonly string[] = [];
+  const handleClick = (product: Product) => {
+    const selectedIndex = selected.indexOf(product);
+    let newSelected: Product[] = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, product);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -100,7 +100,8 @@ const ProductTable = () => {
     setDense(event.target.checked);
   };
 
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
+  const isSelected = (product: Product) =>
+    selected.filter((p) => p.id === product.id).length > 0;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = () => {
@@ -115,7 +116,7 @@ const ProductTable = () => {
   return (
     <Box sx={{ width: '100%' }} data-testid={TestIds.productTable}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <ProductTableToolbar numSelected={selected.length} />
+        <ProductTableToolbar selectedProducts={selected} />
         <TableContainer>
           <Table
             sx={{ minWidth: 600 }}
@@ -136,13 +137,13 @@ const ProductTable = () => {
                 .sort(getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((item: Product, index: number) => {
-                  const isItemSelected = isSelected(item.name);
+                  const isItemSelected = isSelected(item);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={() => handleClick(item.name)}
+                      onClick={() => handleClick(item)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
