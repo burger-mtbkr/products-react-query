@@ -5,7 +5,9 @@ import Modal from '@mui/material/Modal';
 import { TestIds } from 'src/utils';
 import { SxProps } from '@mui/system';
 import { Theme } from '@mui/material';
-import { Product } from 'src/models';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDeleteModalOpen } from 'src/actions';
+import { getDeleteModalOpen, getSelectedProducts } from 'src/selectors';
 
 const style: SxProps<Theme> = {
   position: 'absolute',
@@ -19,21 +21,17 @@ const style: SxProps<Theme> = {
   p: 4,
 };
 
-interface IDeletePromptModal {
-  isOpen: boolean;
-  selectedProducts: Product[];
-  handleCloseModal(): void;
-}
-
-const DeletePromptModal = (props: IDeletePromptModal) => {
-  const { isOpen, selectedProducts } = props;
+const DeletePromptModal = () => {
+  const dispatch = useDispatch();
+  const isOpen = useSelector(getDeleteModalOpen);
+  const selectedProducts = useSelector(getSelectedProducts);
 
   const deleteProducts = () => {
     console.log('selectedProducts', selectedProducts);
   };
 
   const handleClose = () => {
-    props.handleCloseModal();
+    dispatch(setDeleteModalOpen(false));
   };
 
   return (

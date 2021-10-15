@@ -14,6 +14,9 @@ import { Order, Product } from 'src/models';
 import { useQuery } from 'react-query';
 import { useState } from 'react';
 import { getAllProducts } from 'src/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSelectedProducts } from 'src/selectors';
+import { setSelectedProducts } from 'src/actions';
 import ProductTableToolbar from './ProductTableToolbar';
 import ProductTableHead from './ProductTableHead';
 
@@ -40,13 +43,16 @@ function getComparator<Key extends keyof number | string>(
 }
 
 const ProductTable = () => {
+  const dispatch = useDispatch();
+
   const { data } = useQuery<Product[], Error>('products', getAllProducts);
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Product>('name');
-  const [selected, setSelected] = useState<Product[]>([]);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(25);
+
+  const selected = useSelector(getSelectedProducts);
 
   const handleRequestSort = (property: keyof Product) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -58,11 +64,11 @@ const ProductTable = () => {
     if (event.target.checked) {
       const newlySelected = data?.map((n: Product) => n);
       if (newlySelected) {
-        setSelected(newlySelected);
+        dispatch(setSelectedProducts(newlySelected));
       }
       return;
     }
-    setSelected([]);
+    dispatch(setSelectedProducts([]));
   };
 
   const handleClick = (product: Product) => {
@@ -81,8 +87,7 @@ const ProductTable = () => {
         selected.slice(selectedIndex + 1),
       );
     }
-
-    setSelected(newSelected);
+    dispatch(setSelectedProducts(newSelected));
   };
 
   const handleChangePage = (newPage: number) => {
@@ -116,7 +121,7 @@ const ProductTable = () => {
   return (
     <Box sx={{ width: '100%' }} data-testid={TestIds.productTable}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <ProductTableToolbar selectedProducts={selected} />
+        <ProductTableToolbar />
         <TableContainer>
           <Table
             sx={{ minWidth: 600 }}

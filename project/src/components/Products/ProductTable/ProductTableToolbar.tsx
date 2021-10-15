@@ -6,17 +6,14 @@ import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
-import { useState } from 'react';
-import { Product } from 'src/models';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDeleteModalOpen } from 'src/actions';
+import { getSelectedProducts } from 'src/selectors';
 import DeletePromptModal from './DeletePromptModal';
 
-interface EnhancedTableToolbarProps {
-  selectedProducts: Product[];
-}
-
-const ProductTableToolbar = (props: EnhancedTableToolbarProps) => {
-  const { selectedProducts } = props;
-  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+const ProductTableToolbar = () => {
+  const dispatch = useDispatch();
+  const selectedProducts = useSelector(getSelectedProducts);
 
   return (
     <>
@@ -62,7 +59,7 @@ const ProductTableToolbar = (props: EnhancedTableToolbarProps) => {
 
         {selectedProducts.length > 0 ? (
           <Tooltip title="Delete">
-            <IconButton onClick={() => setShowDeleteModal(true)}>
+            <IconButton onClick={() => dispatch(setDeleteModalOpen(true))}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>
@@ -74,11 +71,7 @@ const ProductTableToolbar = (props: EnhancedTableToolbarProps) => {
           </Tooltip>
         )}
       </Toolbar>
-      <DeletePromptModal
-        isOpen={showDeleteModal}
-        handleCloseModal={() => setShowDeleteModal(false)}
-        selectedProducts={selectedProducts}
-      />
+      <DeletePromptModal />
     </>
   );
 };

@@ -1,2 +1,2 @@
-export * from './order';
-export * from './product';
+export * from './order.model';
+export * from './product.model';
