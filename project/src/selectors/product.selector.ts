@@ -6,3 +6,6 @@ export const getDeleteModalOpen = (state: TStoreState): boolean =>
 
 export const getSelectedProducts = (state: TStoreState): Product[] =>
   state.product.selectedProducts;
+
+export const getEditProduct = (state: TStoreState): Product =>
+  state.product.selectedProducts[0];

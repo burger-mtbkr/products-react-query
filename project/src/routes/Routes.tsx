@@ -1,10 +1,14 @@
 import { Switch, Route } from 'react-router-dom';
-import Home from '../views/Home';
+import ProductForm from 'src/views/Products/ProductForm';
+import Home from 'src/views/Home/Home';
 
 const Routes = () => (
   <Switch>
     <Route exact path="/">
       <Home />
+    </Route>
+    <Route exact path="/edit">
+      <ProductForm />
     </Route>
   </Switch>
 );

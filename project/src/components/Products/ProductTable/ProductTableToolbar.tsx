@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router-dom';
 import { alpha } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -12,6 +13,7 @@ import { getSelectedProducts } from 'src/selectors';
 import DeletePromptModal from './DeletePromptModal';
 
 const ProductTableToolbar = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const selectedProducts = useSelector(getSelectedProducts);
 
@@ -51,7 +53,11 @@ const ProductTableToolbar = () => {
         )}
         {selectedProducts.length === 1 && (
           <Tooltip title="Edit">
-            <IconButton>
+            <IconButton
+              onClick={() => {
+                history.push('/edit');
+              }}
+            >
               <EditIcon />
             </IconButton>
           </Tooltip>

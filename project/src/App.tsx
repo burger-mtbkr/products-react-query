@@ -1,4 +1,4 @@
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { Provider } from 'react-redux';
@@ -18,10 +18,12 @@ function App() {
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={darkTheme}>
-          <Router>
-            <Header />
-            <Routes />
-          </Router>
+          <BrowserRouter>
+            <div className="App">
+              <Header />
+              <Routes />
+            </div>
+          </BrowserRouter>
         </ThemeProvider>
       </QueryClientProvider>
     </Provider>
