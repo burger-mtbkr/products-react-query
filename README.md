@@ -1,6 +1,10 @@
 # CRUD Products React App - WIP
 
 
+**Overview:**
+
+This is a simple CRUD product apploication so demonstrate using [React Query](https://react-query.tanstack.com/) side by side with redux.  The idea is that [React Query](https://react-query.tanstack.com/) takes care of the data loading and saving and React only takes care of application specific state like is modal open or closed, selected rows etc. 
+
 **Prerequistes:**
 
 - You'll need the [Mongo-Api-Docker](https://github.com/loanburger/Mongo-Api-Docker) mock api. 
@@ -13,6 +17,7 @@
 - [React Hook Forms](https://react-hook-form.com)
 - React Testing Library
 - [React Query](https://react-query.tanstack.com/)
+- [Redux Toolkit](https://redux-toolkit.js.org/) - used for local app sate like modal open/closed, selectred rows etc.
 
 **To run the project:**
 
