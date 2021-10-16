@@ -1,12 +1,15 @@
 import { TextField, Button, Grid } from '@mui/material';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Product, productSchema } from 'src/models';
 import { getEditProduct } from 'src/selectors';
 import { useHistory } from 'react-router-dom';
+import { useEffect } from 'react';
+import { setHeaderTitle } from 'src/actions';
 
 const ProductForm = (): JSX.Element => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const product = useSelector(getEditProduct);
 
@@ -23,6 +26,10 @@ const ProductForm = (): JSX.Element => {
   const onSubmit: SubmitHandler<Product> = (data: Product) => {
     console.log(data);
   };
+
+  useEffect(() => {
+    dispatch(setHeaderTitle('Product details'));
+  }, [dispatch]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -87,7 +94,13 @@ const ProductForm = (): JSX.Element => {
             </Button>
           </Grid>
           <Grid item>
-            <Button variant="contained" onClick={() => history.replace('/')}>
+            <Button
+              variant="contained"
+              onClick={() => {
+                dispatch(setHeaderTitle('Product list'));
+                history.replace('/');
+              }}
+            >
               Cancel
             </Button>
           </Grid>

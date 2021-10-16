@@ -10,3 +10,7 @@ export const setDeleteModalOpen = createAction<boolean>(
 export const setSelectedProducts = createAction<Product[]>(
   `${PREFIX}_SET_SELECTED_PRODUCTS`,
 );
+
+export const setHeaderTitle = createAction<string>(
+  `APP_${PREFIX}_SET_HEADER_TITLE`,
+);

@@ -2,7 +2,7 @@ import * as yup from 'yup';
 import { SchemaOf } from 'yup';
 
 export type Product = {
-  id: number;
+  id: string;
   name: string;
   category: string;
   price: number;
@@ -16,7 +16,7 @@ export interface IProductState {
 export const productSchema: SchemaOf<Product> = yup
   .object()
   .shape({
-    id: yup.number().positive().required(),
+    id: yup.string().notRequired(),
     name: yup.string().required('Name is required'),
     category: yup.string().required('Category is required'),
     price: yup
