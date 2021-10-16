@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Product } from 'src/models';
+import { IProductSaveResponse, Product } from 'src/models';
 
 export const getAllProducts = async (): Promise<Product[]> => {
   const url = process.env.REACT_APP_API_END_POINT;
@@ -31,36 +31,50 @@ export const getProduct = async (id: string): Promise<Product | undefined> => {
   return undefined;
 };
 
-export const postProduct = async (
+export const saveProduct = async (
   product: Product,
-): Promise<Product | undefined> => {
-  const url = process.env.REACT_APP_API_END_POINT;
-  if (url) {
-    const response = await axios.post(`${url}`, product, {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    });
-    return response.data as Product;
-  }
-  return undefined;
-};
+): Promise<IProductSaveResponse> => {
+  const url = process.env.REACT_APP_API_END_POINT ?? '';
+  try {
+    const response = product.id
+      ? await axios.put(`${url}`, product, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+      : await axios.post(`${url}`, product, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        });
 
-export const putProduct = async (
-  product: Product,
-): Promise<Product | undefined> => {
-  const url = process.env.REACT_APP_API_END_POINT;
-  if (url) {
-    const response = await axios.put(`${url}/${product.id}`, product, {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    });
-    return response.data as Product;
+    if (
+      response.status === 200 ||
+      response.status === 204 ||
+      response.status === 201
+    ) {
+      return {
+        product: response.data as Product,
+        isSuccessful: true,
+        error: undefined,
+      };
+    }
+    return {
+      product: undefined,
+      isSuccessful: false,
+      error: new Error('An error has occured'),
+    };
+  } catch (error) {
+    return {
+      product: undefined,
+      isSuccessful: false,
+      error: axios.isAxiosError(error)
+        ? error
+        : new Error('An error has occured'),
+    };
   }
-  return undefined;
 };
 
 export const deleteProduct = async (

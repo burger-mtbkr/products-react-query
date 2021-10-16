@@ -2,16 +2,27 @@ import { TextField, Button, Grid } from '@mui/material';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { Product, productSchema } from 'src/models';
+import { IProductSaveResponse, Product, productSchema } from 'src/models';
 import { getEditProduct } from 'src/selectors';
 import { useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import { setHeaderTitle } from 'src/actions';
+import { useMutation } from 'react-query';
+import { saveProduct } from 'src/api';
 
 const ProductForm = (): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const product = useSelector(getEditProduct);
+  let product = useSelector(getEditProduct);
+
+  if (!product) {
+    product = {
+      id: '',
+      name: '',
+      category: '',
+      price: 0,
+    };
+  }
 
   const {
     register,
@@ -23,8 +34,17 @@ const ProductForm = (): JSX.Element => {
     resolver: yupResolver(productSchema),
   });
 
-  const onSubmit: SubmitHandler<Product> = (data: Product) => {
-    console.log(data);
+  // TODO - Find a better way to useMutationAsync using await and not having to use then
+  // e.g. deconstruct the data result.
+  const { mutateAsync } = useMutation(saveProduct);
+  const onSubmit: SubmitHandler<Product> = (p: Product) => {
+    mutateAsync(p).then((data: IProductSaveResponse) => {
+      if (data?.isSuccessful) {
+        history.push('/');
+      } else {
+        alert(data?.error?.message);
+      }
+    });
   };
 
   useEffect(() => {

@@ -7,5 +7,7 @@ export const getDeleteModalOpen = (state: TStoreState): boolean =>
 export const getSelectedProducts = (state: TStoreState): Product[] =>
   state.product.selectedProducts;
 
-export const getEditProduct = (state: TStoreState): Product =>
-  state.product.selectedProducts[0];
+export const getEditProduct = (state: TStoreState): Product | undefined =>
+  state.product.selectedProducts.length > 0
+    ? state.product.selectedProducts[0]
+    : undefined;
