@@ -35,7 +35,7 @@ export const getProduct = async (id: string): Promise<Product | undefined> => {
 export const saveProduct = async (
   product: Product,
 ): Promise<IProductSaveResponse> => {
-  const url = 'http://localhost:8025/api/product'; // process.env.REACT_APP_API_END_POINT ?? '';
+  const url = process.env.REACT_APP_API_END_POINT ?? '';
   try {
     const response = product.id
       ? await axios.put(`${url}`, product, {
