@@ -44,8 +44,10 @@ function getComparator<Key extends keyof number | string>(
 
 const ProductTable = () => {
   const dispatch = useDispatch();
-
-  const { data } = useQuery<IProductListResponse>('products', getAllProducts);
+  const { data, isLoading } = useQuery<IProductListResponse>(
+    'products',
+    getAllProducts,
+  );
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof ProductListItem>('name');
   const [page, setPage] = useState(0);
@@ -118,7 +120,9 @@ const ProductTable = () => {
     return 0;
   };
 
-  return (
+  return isLoading ? (
+    <p>Loading...</p>
+  ) : (
     <Box sx={{ width: '100%' }} data-testid={TestIds.productTable}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <ProductTableToolbar />
