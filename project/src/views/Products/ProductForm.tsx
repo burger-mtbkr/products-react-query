@@ -13,10 +13,12 @@ import { saveProduct } from 'src/api';
 const ProductForm = (): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
-  let product = useSelector(getEditProduct);
+  const mutation = useMutation(saveProduct);
 
-  if (!product) {
-    product = {
+  let productToSave = useSelector(getEditProduct);
+
+  if (!productToSave) {
+    productToSave = {
       id: '',
       name: '',
       category: '',
@@ -34,17 +36,15 @@ const ProductForm = (): JSX.Element => {
     resolver: yupResolver(productSchema),
   });
 
-  // TODO - Find a better way to useMutationAsync using await and not having to use then
-  // e.g. deconstruct the data result.
-  const { mutateAsync } = useMutation(saveProduct);
-  const onSubmit: SubmitHandler<Product> = (p: Product) => {
-    mutateAsync(p).then((data: IProductSaveResponse) => {
-      if (data?.isSuccessful) {
-        history.push('/');
-      } else {
-        alert(data?.error?.message);
-      }
-    });
+  const onSubmit: SubmitHandler<Product> = async (p: Product) => {
+    const { product, isSuccessful, error }: IProductSaveResponse =
+      await mutation.mutateAsync(p);
+    if (isSuccessful) {
+      console.log('product', product);
+      history.push('/');
+    } else {
+      alert(error?.message);
+    }
   };
 
   useEffect(() => {
@@ -54,13 +54,13 @@ const ProductForm = (): JSX.Element => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container direction="column" justifyContent="center" spacing={1}>
-        <input type="hidden" value={product.id} {...register('id')} />
+        <input type="hidden" value={productToSave.id} {...register('id')} />
         <Grid item xs={6} marginY={2}>
           <TextField
             type="text"
             label="Name"
             variant="outlined"
-            defaultValue={product.name}
+            defaultValue={productToSave.name}
             InputLabelProps={{ shrink: true }}
             error={errors.name !== undefined}
             helperText={errors.name?.message}
@@ -72,7 +72,7 @@ const ProductForm = (): JSX.Element => {
             type="text"
             label="Category"
             variant="outlined"
-            defaultValue={product.category}
+            defaultValue={productToSave.category}
             InputLabelProps={{ shrink: true }}
             error={errors.category !== undefined}
             helperText={errors.category?.message}
@@ -84,7 +84,7 @@ const ProductForm = (): JSX.Element => {
             type="number"
             label="Price"
             variant="outlined"
-            defaultValue={product.price}
+            defaultValue={productToSave.price}
             InputLabelProps={{ shrink: true }}
             inputProps={{
               inputMode: 'numeric',
@@ -95,6 +95,7 @@ const ProductForm = (): JSX.Element => {
             {...register('price', { required: true })}
           />
         </Grid>
+
         <Grid
           container
           xs={12}

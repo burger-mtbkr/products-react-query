@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { IProductSaveResponse, Product } from 'src/models';
+import { isSuccessfulResponse } from 'src/utils';
 
 export const getAllProducts = async (): Promise<Product[]> => {
   const url = process.env.REACT_APP_API_END_POINT;
@@ -50,11 +51,7 @@ export const saveProduct = async (
           },
         });
 
-    if (
-      response.status === 200 ||
-      response.status === 204 ||
-      response.status === 201
-    ) {
+    if (isSuccessfulResponse(response)) {
       return {
         product: response.data as Product,
         isSuccessful: true,
