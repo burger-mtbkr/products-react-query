@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { IProductSaveResponse, Product } from 'src/models';
+import { IProductSaveResponse, Product, ProductListItem } from 'src/models';
 import { isSuccessfulResponse } from 'src/utils';
 
-export const getAllProducts = async (): Promise<Product[]> => {
+export const getAllProducts = async (): Promise<ProductListItem[]> => {
   const url = process.env.REACT_APP_API_END_POINT;
   if (url) {
     const response = await axios.get(url, {
@@ -12,7 +12,7 @@ export const getAllProducts = async (): Promise<Product[]> => {
       },
     });
 
-    return response.data as Product[];
+    return response.data as ProductListItem[];
   }
   return [];
 };
@@ -35,7 +35,7 @@ export const getProduct = async (id: string): Promise<Product | undefined> => {
 export const saveProduct = async (
   product: Product,
 ): Promise<IProductSaveResponse> => {
-  const url = process.env.REACT_APP_API_END_POINT ?? '';
+  const url = 'http://localhost:8025/api/product'; // process.env.REACT_APP_API_END_POINT ?? '';
   try {
     const response = product.id
       ? await axios.put(`${url}`, product, {

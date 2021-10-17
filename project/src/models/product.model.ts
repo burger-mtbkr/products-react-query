@@ -3,15 +3,19 @@ import * as yup from 'yup';
 import { SchemaOf } from 'yup';
 
 export type Product = {
-  id: string;
+  id?: string;
   name: string;
   category: string;
   price: number;
 };
 
+export type ProductListItem = Product & {
+  id: string;
+};
+
 export interface IProductState {
   deleteModalOpen: boolean;
-  selectedProducts: Product[];
+  selectedProducts: ProductListItem[];
 }
 
 export const productSchema: SchemaOf<Product> = yup

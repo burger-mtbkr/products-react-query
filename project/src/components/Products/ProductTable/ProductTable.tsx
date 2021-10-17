@@ -10,7 +10,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { TestIds } from 'src/utils';
-import { Order, Product } from 'src/models';
+import { Order, ProductListItem } from 'src/models';
 import { useQuery } from 'react-query';
 import { useState } from 'react';
 import { getAllProducts } from 'src/api';
@@ -45,16 +45,19 @@ function getComparator<Key extends keyof number | string>(
 const ProductTable = () => {
   const dispatch = useDispatch();
 
-  const { data } = useQuery<Product[], Error>('products', getAllProducts);
+  const { data } = useQuery<ProductListItem[], Error>(
+    'products',
+    getAllProducts,
+  );
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof Product>('name');
+  const [orderBy, setOrderBy] = useState<keyof ProductListItem>('name');
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(25);
 
   const selected = useSelector(getSelectedProducts);
 
-  const handleRequestSort = (property: keyof Product) => {
+  const handleRequestSort = (property: keyof ProductListItem) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
@@ -62,7 +65,7 @@ const ProductTable = () => {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newlySelected = data?.map((n: Product) => n);
+      const newlySelected = data?.map((n: ProductListItem) => n);
       if (newlySelected) {
         dispatch(setSelectedProducts(newlySelected));
       }
@@ -71,9 +74,9 @@ const ProductTable = () => {
     dispatch(setSelectedProducts([]));
   };
 
-  const handleClick = (product: Product) => {
+  const handleClick = (product: ProductListItem) => {
     const selectedIndex = selected.indexOf(product);
-    let newSelected: Product[] = [];
+    let newSelected: ProductListItem[] = [];
 
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, product);
@@ -105,7 +108,7 @@ const ProductTable = () => {
     setDense(event.target.checked);
   };
 
-  const isSelected = (product: Product) =>
+  const isSelected = (product: ProductListItem) =>
     selected.filter((p) => p.id === product.id).length > 0;
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -141,7 +144,7 @@ const ProductTable = () => {
                 ?.slice()
                 .sort(getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((item: Product, index: number) => {
+                .map((item: ProductListItem, index: number) => {
                   const isItemSelected = isSelected(item);
                   const labelId = `enhanced-table-checkbox-${index}`;
 

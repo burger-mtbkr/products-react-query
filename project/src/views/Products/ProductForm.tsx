@@ -19,7 +19,6 @@ const ProductForm = (): JSX.Element => {
 
   if (!productToSave) {
     productToSave = {
-      id: '',
       name: '',
       category: '',
       price: 0,
@@ -37,10 +36,9 @@ const ProductForm = (): JSX.Element => {
   });
 
   const onSubmit: SubmitHandler<Product> = async (p: Product) => {
-    const { product, isSuccessful, error }: IProductSaveResponse =
+    const { isSuccessful, error }: IProductSaveResponse =
       await mutation.mutateAsync(p);
     if (isSuccessful) {
-      console.log('product', product);
       history.push('/');
     } else {
       alert(error?.message);
@@ -54,7 +52,9 @@ const ProductForm = (): JSX.Element => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container direction="column" justifyContent="center" spacing={1}>
-        <input type="hidden" value={productToSave.id} {...register('id')} />
+        {productToSave.id && (
+          <input type="hidden" value={productToSave.id} {...register('id')} />
+        )}
         <Grid item xs={6} marginY={2}>
           <TextField
             type="text"
