@@ -2,7 +2,7 @@ import { TextField, Button, Grid } from '@mui/material';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { IProductSaveResponse, Product, productSchema } from 'src/models';
+import { IProductResponse, Product, productSchema } from 'src/models';
 import { getEditProduct } from 'src/selectors';
 import { useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -36,7 +36,7 @@ const ProductForm = (): JSX.Element => {
   });
 
   const onSubmit: SubmitHandler<Product> = async (p: Product) => {
-    const { isSuccessful, error }: IProductSaveResponse =
+    const { isSuccessful, error }: IProductResponse =
       await mutation.mutateAsync(p);
     if (isSuccessful) {
       history.push('/');

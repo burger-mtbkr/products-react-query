@@ -32,8 +32,14 @@ export const productSchema: SchemaOf<Product> = yup
   })
   .required();
 
-export interface IProductSaveResponse {
+export interface IProductResponse {
   product?: Product;
+  error?: AxiosError | Error;
+  isSuccessful?: boolean;
+}
+
+export interface IProductListResponse {
+  products?: ProductListItem[];
   error?: AxiosError | Error;
   isSuccessful?: boolean;
 }
