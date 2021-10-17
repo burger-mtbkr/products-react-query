@@ -37,9 +37,3 @@ export interface IProductResponse {
   error?: AxiosError | Error;
   isSuccessful?: boolean;
 }
-
-export interface IProductListResponse {
-  products?: ProductListItem[];
-  error?: AxiosError | Error;
-  isSuccessful?: boolean;
-}

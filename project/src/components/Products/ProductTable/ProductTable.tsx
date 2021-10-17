@@ -10,7 +10,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { TestIds } from 'src/utils';
-import { Order, ProductListItem, IProductListResponse } from 'src/models';
+import { Order, ProductListItem } from 'src/models';
 import { useQuery } from 'react-query';
 import { useState } from 'react';
 import { getAllProducts } from 'src/api';
@@ -44,7 +44,7 @@ function getComparator<Key extends keyof number | string>(
 
 const ProductTable = () => {
   const dispatch = useDispatch();
-  const { data, isLoading } = useQuery<IProductListResponse>(
+  const { data, isLoading } = useQuery<ProductListItem[], Error>(
     'products',
     getAllProducts,
   );
@@ -64,7 +64,7 @@ const ProductTable = () => {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newlySelected = data?.products?.map((n: ProductListItem) => n);
+      const newlySelected = data?.map((n: ProductListItem) => n);
       if (newlySelected) {
         dispatch(setSelectedProducts(newlySelected));
       }
@@ -112,10 +112,8 @@ const ProductTable = () => {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = () => {
-    if (data?.products && data.products.length > 0) {
-      return page > 0
-        ? Math.max(0, (1 + page) * rowsPerPage - data.products.length)
-        : 0;
+    if (data && data?.length > 0) {
+      return page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
     }
     return 0;
   };
@@ -138,10 +136,10 @@ const ProductTable = () => {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={(_e, property) => handleRequestSort(property)}
-              rowCount={data?.products?.length || 0}
+              rowCount={data?.length || 0}
             />
             <TableBody>
-              {data?.products
+              {data
                 ?.slice()
                 .sort(getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -197,7 +195,7 @@ const ProductTable = () => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25, 50]}
           component="div"
-          count={data?.products?.length || 0}
+          count={data?.length || 0}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={(_e, n) => handleChangePage(n)}
