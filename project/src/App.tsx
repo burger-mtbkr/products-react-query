@@ -12,7 +12,16 @@ const darkTheme = createTheme({
   },
 });
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+    mutations: {
+      retry: false,
+    },
+  },
+});
 function App() {
   return (
     <Provider store={store}>

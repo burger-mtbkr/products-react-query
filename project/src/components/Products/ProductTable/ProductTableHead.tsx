@@ -5,13 +5,13 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { visuallyHidden } from '@mui/utils';
-import { Order, Product } from 'src/models/';
+import { Order, ProductListItem } from 'src/models/';
 
 interface ProductTableHeadProps {
   numSelected: number;
   onRequestSort: (
     event: React.MouseEvent<unknown>,
-    property: keyof Product,
+    property: keyof ProductListItem,
   ) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
@@ -21,7 +21,7 @@ interface ProductTableHeadProps {
 
 interface HeadCell {
   disablePadding: boolean;
-  id: keyof Product;
+  id: keyof ProductListItem;
   label: string;
   numeric: boolean;
 }
@@ -62,7 +62,7 @@ const ProductTableHead = ({
   onRequestSort,
 }: ProductTableHeadProps) => {
   const createSortHandler =
-    (property: keyof Product) => (event: React.MouseEvent<unknown>) => {
+    (property: keyof ProductListItem) => (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property);
     };
 
