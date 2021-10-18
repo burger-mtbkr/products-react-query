@@ -9,7 +9,7 @@
     "import/resolver": {
       "node": {
         "paths": ["."],
-        "extensions": [".ts", ".tsx"]
+        "extensions": [".ts", ".tsx", "js", "jsx"]
       }
     }
   },
