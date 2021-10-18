@@ -1,5 +1,6 @@
 import { render as rtlRender, RenderOptions } from '@testing-library/react';
 import { Provider } from 'react-redux';
+import { createTheme, ThemeProvider } from '@mui/material';
 import configureStore from 'redux-mock-store';
 import { rootInitialState, TStoreState } from 'src/reducers';
 import { Store } from '@reduxjs/toolkit';
@@ -9,6 +10,12 @@ interface ExtendedRenderOptions extends RenderOptions {
   initialState: Partial<TStoreState>;
   store?: Store<Partial<TStoreState>>;
 }
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,7 +35,7 @@ const TestWrapper =
     (
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
-          {children}
+          <ThemeProvider theme={darkTheme}>{children}</ThemeProvider>
         </QueryClientProvider>
       </Provider>
     );
