@@ -12,7 +12,7 @@ import Switch from '@mui/material/Switch';
 import { TestIds } from 'src/utils';
 import { Order, ProductListItem } from 'src/models';
 import { useQuery } from 'react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getAllProducts } from 'src/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSelectedProducts } from 'src/selectors';
@@ -55,6 +55,10 @@ const ProductTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(25);
 
   const selected = useSelector(getSelectedProducts);
+
+  useEffect(() => {
+    dispatch(setSelectedProducts([]));
+  }, [dispatch]);
 
   const handleRequestSort = (property: keyof ProductListItem) => {
     const isAsc = orderBy === property && order === 'asc';

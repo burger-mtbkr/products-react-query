@@ -12,6 +12,7 @@ import { saveProduct } from 'src/api';
 
 const ProductForm = (): JSX.Element => {
   const dispatch = useDispatch();
+
   const history = useHistory();
   const mutation = useMutation(saveProduct);
 
@@ -38,11 +39,7 @@ const ProductForm = (): JSX.Element => {
   const onSubmit: SubmitHandler<Product> = async (p: Product) => {
     const { isSuccessful, error }: IProductResponse =
       await mutation.mutateAsync(p);
-    if (isSuccessful) {
-      history.push('/');
-    } else {
-      alert(error?.message);
-    }
+    isSuccessful ? history.push('/') : alert(error?.message);
   };
 
   useEffect(() => {

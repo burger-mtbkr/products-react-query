@@ -8,6 +8,9 @@ import { Theme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDeleteModalOpen } from 'src/actions';
 import { getDeleteModalOpen, getSelectedProducts } from 'src/selectors';
+import { useMutation, useQueryClient } from 'react-query';
+import { deleteProduct } from 'src/api';
+import { IProductResponse } from 'src/models';
 
 const style: SxProps<Theme> = {
   position: 'absolute',
@@ -23,11 +26,20 @@ const style: SxProps<Theme> = {
 
 const DeletePromptModal = () => {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+  const mutation = useMutation(deleteProduct);
   const isOpen = useSelector(getDeleteModalOpen);
   const selectedProducts = useSelector(getSelectedProducts);
 
-  const deleteProducts = () => {
-    console.log('selectedProducts', selectedProducts);
+  const onDeleteProducts = async () => {
+    const { id } = selectedProducts[0];
+
+    const { isSuccessful, error }: IProductResponse =
+      await mutation.mutateAsync(id);
+
+    queryClient.invalidateQueries('products');
+
+    isSuccessful ? dispatch(setDeleteModalOpen(false)) : alert(error?.message);
   };
 
   const handleClose = () => {
@@ -48,7 +60,7 @@ const DeletePromptModal = () => {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Are you sure you wish to delete the selected products?
           </Typography>
-          <Button onClick={deleteProducts}>Delete</Button>
+          <Button onClick={onDeleteProducts}>Delete</Button>
           <Button onClick={handleClose}>Close</Button>
         </Box>
       </Modal>

@@ -51,25 +51,26 @@ const ProductTableToolbar = () => {
             Products
           </Typography>
         )}
-        {selectedProducts.length === 1 && (
-          <Tooltip title="Edit">
-            <IconButton
-              onClick={() => {
-                history.push('/edit');
-              }}
-            >
-              <EditIcon />
-            </IconButton>
-          </Tooltip>
-        )}
 
-        {selectedProducts.length > 0 ? (
-          <Tooltip title="Delete">
-            <IconButton onClick={() => dispatch(setDeleteModalOpen(true))}>
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        ) : (
+        {selectedProducts.length === 1 && (
+          <>
+            <Tooltip title="Edit">
+              <IconButton
+                onClick={() => {
+                  history.push('/edit');
+                }}
+              >
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Delete">
+              <IconButton onClick={() => dispatch(setDeleteModalOpen(true))}>
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          </>
+        )}
+        {selectedProducts.length === 0 && (
           <Tooltip title="Add">
             <IconButton>
               <AddIcon
