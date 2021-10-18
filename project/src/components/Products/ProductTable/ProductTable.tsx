@@ -17,6 +17,7 @@ import { getAllProducts } from 'src/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSelectedProducts } from 'src/selectors';
 import { setSelectedProducts } from 'src/actions';
+import { Typography } from '@mui/material';
 import ProductTableToolbar from './ProductTableToolbar';
 import ProductTableHead from './ProductTableHead';
 
@@ -123,7 +124,11 @@ const ProductTable = () => {
   };
 
   return isLoading ? (
-    <p>Loading...</p>
+    <Box sx={{ width: '100%' }} data-testid={TestIds.productTable}>
+      <Paper sx={{ width: '100%', mb: 2 }}>
+        <Typography>Loading...</Typography>
+      </Paper>
+    </Box>
   ) : (
     <Box sx={{ width: '100%' }} data-testid={TestIds.productTable}>
       <Paper sx={{ width: '100%', mb: 2 }}>
