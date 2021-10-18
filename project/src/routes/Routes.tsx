@@ -7,6 +7,9 @@ const Routes = () => (
     <Route exact path="/">
       <Home />
     </Route>
+    <Route exact path="/add">
+      <ProductForm />
+    </Route>
     <Route exact path="/edit">
       <ProductForm />
     </Route>

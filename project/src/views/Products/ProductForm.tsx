@@ -2,16 +2,29 @@ import { TextField, Button, Grid } from '@mui/material';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { Product, productSchema } from 'src/models';
+import { IProductResponse, Product, productSchema } from 'src/models';
 import { getEditProduct } from 'src/selectors';
 import { useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import { setHeaderTitle } from 'src/actions';
+import { useMutation } from 'react-query';
+import { saveProduct } from 'src/api';
 
 const ProductForm = (): JSX.Element => {
   const dispatch = useDispatch();
+
   const history = useHistory();
-  const product = useSelector(getEditProduct);
+  const mutation = useMutation(saveProduct);
+
+  let productToSave = useSelector(getEditProduct);
+
+  if (!productToSave) {
+    productToSave = {
+      name: '',
+      category: '',
+      price: 0,
+    };
+  }
 
   const {
     register,
@@ -23,8 +36,10 @@ const ProductForm = (): JSX.Element => {
     resolver: yupResolver(productSchema),
   });
 
-  const onSubmit: SubmitHandler<Product> = (data: Product) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<Product> = async (p: Product) => {
+    const { isSuccessful, error }: IProductResponse =
+      await mutation.mutateAsync(p);
+    isSuccessful ? history.push('/') : alert(error?.message);
   };
 
   useEffect(() => {
@@ -34,13 +49,15 @@ const ProductForm = (): JSX.Element => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container direction="column" justifyContent="center" spacing={1}>
-        <input type="hidden" value={product.id} {...register('id')} />
+        {productToSave.id && (
+          <input type="hidden" value={productToSave.id} {...register('id')} />
+        )}
         <Grid item xs={6} marginY={2}>
           <TextField
             type="text"
             label="Name"
             variant="outlined"
-            defaultValue={product.name}
+            defaultValue={productToSave.name}
             InputLabelProps={{ shrink: true }}
             error={errors.name !== undefined}
             helperText={errors.name?.message}
@@ -52,7 +69,7 @@ const ProductForm = (): JSX.Element => {
             type="text"
             label="Category"
             variant="outlined"
-            defaultValue={product.category}
+            defaultValue={productToSave.category}
             InputLabelProps={{ shrink: true }}
             error={errors.category !== undefined}
             helperText={errors.category?.message}
@@ -64,7 +81,7 @@ const ProductForm = (): JSX.Element => {
             type="number"
             label="Price"
             variant="outlined"
-            defaultValue={product.price}
+            defaultValue={productToSave.price}
             InputLabelProps={{ shrink: true }}
             inputProps={{
               inputMode: 'numeric',
@@ -75,6 +92,7 @@ const ProductForm = (): JSX.Element => {
             {...register('price', { required: true })}
           />
         </Grid>
+
         <Grid
           container
           xs={12}
