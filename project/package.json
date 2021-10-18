@@ -23,6 +23,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@babel/preset-typescript": "^7.15.0",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@hookform/resolvers": "^2.8.2",
