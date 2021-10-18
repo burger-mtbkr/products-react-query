@@ -1,4 +1,4 @@
-# CRUD Products React App - WIP
+# CRUD Products React App
 
 
 **Overview:**
@@ -18,6 +18,7 @@ This is a simple CRUD product application to demonstrate using [React Query](htt
 - React Testing Library
 - [React Query](https://react-query.tanstack.com/)
 - [Redux Toolkit](https://redux-toolkit.js.org/) - used for local app state like modal open/closed, selected rows etc.
+- [Github Actions](https://github.com/features/actions) for running checks - CI workflow can be seen [here](https://github.com/loanburger/products-react-query/blob/main/.github/workflows/build_test_react.yml)
 
 **To run the project:**
 
