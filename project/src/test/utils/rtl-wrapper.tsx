@@ -33,7 +33,7 @@ const TestWrapper =
       </Provider>
     );
 
-const render = (
+const renderWithRedux = (
   component: React.ReactElement,
   {
     initialState,
@@ -50,4 +50,4 @@ const render = (
 
 export * from '@testing-library/react';
 // override the built-in render with our own
-export { render };
+export { renderWithRedux };
