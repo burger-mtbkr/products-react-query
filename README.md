@@ -1,9 +1,11 @@
-# CRUD Products React App
+# CRUD Products React App using React Query
 
 
 **Overview:**
 
-This is a simple CRUD product application to demonstrate using [React Query](https://react-query.tanstack.com/) side by side with redux.  The idea is that [React Query](https://react-query.tanstack.com/) takes care of the data loading and saving and React only takes care of application specific state like is modal open or closed, selected rows etc.
+This is a simple CRUD product application to demonstrate using [React Query](https://react-query.tanstack.com/) side by side with redux.  The idea is that [React Query](https://react-query.tanstack.com/) takes care of the data loading and saving and React only takes care of application specific state like is modal open or closed, selected rows etc. 
+
+_For an example on how to implement the same app using Redux Saga you can refer to this repository: [products-redux-sagas](https://github.com/loanburger/products-redux-sagas)._
 
 **Prerequisites:**
 
