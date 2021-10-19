@@ -4,7 +4,7 @@ import { renderWithRedux } from 'src/test/utils';
 import { TestIds } from 'src/utils/testId.util';
 import Header from './Header';
 
-test('renders welcome test', () => {
+test(`renders ${Header.name}`, () => {
   renderWithRedux(<Header />, {
     initialState: rootInitialState,
   });
